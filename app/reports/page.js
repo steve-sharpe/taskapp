@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Download, Printer } from 'lucide-react';
@@ -18,6 +18,8 @@ const STATUS_OPTIONS = [
   { value: 'OPEN', label: 'Open' },
   { value: 'DONE', label: 'Done' },
   { value: 'IAN', label: 'Ian' },
+  { value: 'ADMIN', label: 'Admin' },
+  { value: 'STEVEM', label: 'Steve M' },
   { value: 'VENDOR', label: 'Vendor' },
 ];
 
@@ -61,6 +63,7 @@ export default function ReportsPage() {
   const byAddress = useMemo(() => groupByAddress(filtered), [filtered]);
 
   const statusLabel = STATUS_OPTIONS.find(o => o.value === status).label;
+  const isIanReport = ['IAN', 'ADMIN', 'STEVEM', 'VENDOR'].includes(status);
   const rangeLabel = from || to ? `${from || 'start'} to ${to || 'today'}` : 'All dates';
   const today = formatDate(new Date());
 
@@ -157,6 +160,8 @@ export default function ReportsPage() {
             <strong>Showing:</strong> {statusLabel} · {rangeLabel} · {filtered.length} task{filtered.length === 1 ? '' : 's'}
           </p>
 
+          {!isIanReport && (
+          <>
           <section className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             <Stat label="Total" value={summary.total} />
             <Stat label="Open" value={summary.open} />
@@ -207,6 +212,8 @@ export default function ReportsPage() {
               </div>
             )}
           </section>
+          </>
+          )}
 
           {filtered.length > 0 && (
             <section>
@@ -225,7 +232,8 @@ export default function ReportsPage() {
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {filtered.map(t => (
-                      <tr key={t._id} className="align-top">
+                      <Fragment key={t._id}>
+                      <tr className={`align-top ${isIanReport && t.notes ? 'border-b-0' : ''}`}>
                         <td className="py-2 pr-4 text-gray-900">{t.address || '(No address)'}</td>
                         <td className="px-2 py-2 font-medium text-gray-900">{t.task}</td>
                         <td className="px-2 py-2 text-gray-600">
@@ -237,6 +245,15 @@ export default function ReportsPage() {
                           {[t.ian && 'IAN', t.admin && 'ADMIN', t.steveM && 'STEVE M', t.vendor && 'VENDOR', t.done && 'DONE'].filter(Boolean).join(', ') || 'Open'}
                         </td>
                       </tr>
+                      {isIanReport && (
+                        <tr>
+                          <td colSpan={6} className="pb-3 pr-4 pt-0 text-gray-700">
+                            <span className="text-xs font-bold uppercase tracking-wide text-gray-500">Notes: </span>
+                            <span className="whitespace-pre-wrap">{t.notes || '—'}</span>
+                          </td>
+                        </tr>
+                      )}
+                      </Fragment>
                     ))}
                   </tbody>
                 </table>
