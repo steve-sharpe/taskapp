@@ -23,7 +23,7 @@ body {
 
 .task-row-grid {
   display: grid;
-  grid-template-columns: minmax(180px, 1.2fr) minmax(170px, 1.2fr) minmax(125px, 0.8fr) 196px 68px;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(170px, 1.2fr) minmax(125px, 0.8fr) 340px 68px;
   align-items: center;
   column-gap: 1rem;
 }

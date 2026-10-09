@@ -252,7 +252,7 @@ export default function Home() {
               No tasks found for the current view.
             </div>
           ) : (
-            <div className="min-w-[837px]">
+            <div className="min-w-[981px]">
               <div className="task-row-grid w-full border border-transparent px-4 py-2 text-xs font-bold uppercase tracking-wide text-gray-500">
                 <button
                   type="button"

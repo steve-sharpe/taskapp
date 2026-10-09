@@ -234,7 +234,7 @@ export default function ReportsPage() {
                         <td className="whitespace-nowrap px-2 py-2 text-gray-600">{formatDate(t.createdAt)}</td>
                         <td className="whitespace-nowrap px-2 py-2 text-gray-600">{formatDate(t.completedAt)}</td>
                         <td className="py-2 pl-2 font-bold text-gray-700">
-                          {[t.ian && 'IAN', t.vendor && 'VENDOR', t.done && 'DONE'].filter(Boolean).join(', ') || 'Open'}
+                          {[t.ian && 'IAN', t.admin && 'ADMIN', t.steveM && 'STEVE M', t.vendor && 'VENDOR', t.done && 'DONE'].filter(Boolean).join(', ') || 'Open'}
                         </td>
                       </tr>
                     ))}

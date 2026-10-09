@@ -5,7 +5,7 @@ import { formatFileSize, MAX_FILE_SIZE, MAX_FILES } from '@/lib/attachmentUtils'
 export default function TaskForm({ task, existingTasks = [], onSave, onCancel }) {
   const [autofilled, setAutofilled] = useState(false);
   const [formData, setFormData] = useState({
-    name: '', address: '', phone: '', email: '', task: '', notes: '', ian: false, vendor: false, done: false
+    name: '', address: '', phone: '', email: '', task: '', notes: '', ian: false, admin: false, steveM: false, vendor: false, done: false
   });
   const [isSaving, setIsSaving] = useState(false);
   const [newFiles, setNewFiles] = useState([]);
@@ -164,6 +164,14 @@ export default function TaskForm({ task, existingTasks = [], onSave, onCancel })
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" name="ian" checked={formData.ian} onChange={handleChange} className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500" tabIndex="7" />
               <span className="font-medium text-gray-700">Ian</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" name="admin" checked={Boolean(formData.admin)} onChange={handleChange} className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500" />
+              <span className="font-medium text-gray-700">Admin</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" name="steveM" checked={Boolean(formData.steveM)} onChange={handleChange} className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500" />
+              <span className="font-medium text-gray-700">Steve M</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" name="vendor" checked={formData.vendor} onChange={handleChange} className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500" tabIndex="8" />

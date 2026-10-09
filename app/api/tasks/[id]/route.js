@@ -37,6 +37,8 @@ export async function PUT(request, { params }) {
         task: data.task.trim(),
         notes: data.notes || '',
         ian: Boolean(data.ian),
+        admin: Boolean(data.admin),
+        steveM: Boolean(data.steveM),
         vendor: Boolean(data.vendor),
         done: Boolean(data.done),
         updatedAt: now,
@@ -63,7 +65,7 @@ export async function PATCH(request, { params }) {
       return NextResponse.json({ error: 'A single valid boolean status is required.' }, { status: 400 });
     }
 
-    const statusFields = ['ian', 'vendor', 'done'];
+    const statusFields = ['ian', 'admin', 'steveM', 'vendor', 'done'];
     const fields = Object.keys(data);
     if (fields.length !== 1 || !statusFields.includes(fields[0]) || typeof data[fields[0]] !== 'boolean') {
       return NextResponse.json({ error: 'A single valid boolean status is required.' }, { status: 400 });

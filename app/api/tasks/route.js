@@ -34,6 +34,8 @@ export async function POST(request) {
       task: data.task.trim(),
       notes: data.notes || '',
       ian: Boolean(data.ian),
+      admin: Boolean(data.admin),
+      steveM: Boolean(data.steveM),
       vendor: Boolean(data.vendor),
       done: Boolean(data.done),
       createdAt: now,

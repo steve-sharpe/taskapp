@@ -11,6 +11,8 @@ export default function TaskCard({ task, onEdit, onDelete, onToggleStatus }) {
 
   const statuses = [
     { field: 'ian', label: 'IAN', checked: task.ian, color: 'accent-blue-600' },
+    { field: 'admin', label: 'ADMIN', checked: task.admin, color: 'accent-blue-600' },
+    { field: 'steveM', label: 'STEVE M', checked: task.steveM, color: 'accent-blue-600' },
     { field: 'vendor', label: 'VENDOR', checked: task.vendor, color: 'accent-purple-600' },
     { field: 'done', label: 'DONE', checked: task.done, color: 'accent-green-600' },
   ];
