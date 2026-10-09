@@ -1,6 +1,47 @@
-import { Calendar, Edit, MapPin, Paperclip, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { Calendar, Check, Copy, Edit, MapPin, Paperclip, Trash2 } from 'lucide-react';
+import { formatDate } from '@/lib/reportUtils';
+
+export function taskToText(task) {
+  const contact = [task.name, task.phone, task.email].filter(Boolean).join(' | ');
+  const lines = [
+    `Task: ${task.task || ''}`,
+    `Address: ${task.address || ''}`,
+    contact && `Contact: ${contact}`,
+    task.createdAt && `Date entered: ${formatDate(task.createdAt)}`,
+    task.notes && `Notes: ${task.notes}`,
+    task.attachments?.length > 0 && `Attachments: ${task.attachments.map(a => a.name).join(', ')}`,
+  ];
+  return lines.filter(Boolean).join('\n');
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  }
+}
 
 export default function TaskCard({ task, onEdit, onDelete, onToggleStatus }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    if (await copyText(taskToText(task))) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
   const createdDate = task.createdAt
     ? new Date(task.createdAt).toLocaleDateString('en-CA', {
         month: 'short',
@@ -71,6 +112,14 @@ export default function TaskCard({ task, onEdit, onDelete, onToggleStatus }) {
       </div>
 
       <div className="flex items-center gap-1">
+        <button
+          onClick={handleCopy}
+          className={`rounded p-1.5 transition-colors ${copied ? 'text-green-600' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'}`}
+          title={copied ? 'Copied!' : 'Copy task info'}
+          aria-label="Copy task info"
+        >
+          {copied ? <Check size={18} /> : <Copy size={18} />}
+        </button>
         <button
           onClick={() => onEdit(task)}
           className="rounded p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600"
